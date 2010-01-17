@@ -1,0 +1,9 @@
+
+ - catalog and logical structure for Taskler's "projects" (for included each tasks for one thing)
+ - add plugin to logs/events storage in LOG standard files (with rotation)
+ - create libs catalog and move Notifications/GetUrlContent object/method
+ 	- refactoring plugins
+
+ - add copyright heads for all project files
+ - refactoring
+ - add Exceptions and try sections
