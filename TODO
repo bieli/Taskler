@@ -7,4 +7,5 @@
  - add copyright heads for all project files
  - refactoring
  - add Exceptions and try sections
- - add to RunSolution run script more inputed tasks for running in one command
+ - use this project http://code.google.com/p/pyactiveresource/ for share/storage data beetwen tasks in one solution
+
