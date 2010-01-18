@@ -1,0 +1,21 @@
+#summary SystemTrayMessageNotyficationPlugin
+
+= Introduction =
+Plugin `SystemTrayMessageNotyficationPlugin` it is solution for system tray messages notyfications. For example in X window system there are a tool tip on the up right monitor position using for fast communication between application and user.
+
+= Details =
+
+Plugin input data:
+  * dictionary with _subject_ and _description_ text
+
+Plugin output data:
+  * show notify message in tray bar in your operating X window system (default gnome)
+
+= Testing =
+  Usage plugin like script from command line:
+{{{
+  $ python SystemTrayMessageNotyficationPlugin <title> <message>
+  ---
+  <title>   - title for notification bubble
+  <message> - message for notification bubbl
+}}}

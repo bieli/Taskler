@@ -1,0 +1,123 @@
+#summary Similar tasks schedulers solutions in Python.
+
+= Similar projects =
+
+[http://docs.python.org/library/multiprocessing.html Multiprocessing — Process-based “threading” interface]
+
+[ http://www.ibm.com/developerworks/library/l-pythrd.html Charming Python: Implementing "weightless threads" with Python generators ]
+
+[ http://pyprocessing.berlios.de/doc/ Documentation for processing-0.50 ]
+
+[ http://code.google.com/p/scheduler-py/ A simple scheduling module for Python ]
+
+[ http://www.esri.com/news/podcasts/transcripts/python_tipsforwritinggeoprocessingscripts.pdf Tips for Writing Python Scripts transcript ]
+
+[ http://blog.brianbeck.com/post/55165808/message-queue-2 Simple scheduled message queue (with threads) ]
+
+[ http://docs.python.org/library/multiprocessing.html#programming-guidelines There are certain guidelines and idioms which should be adhered to when using multiprocessing ]
+
+[ http://docs.python.org/library/sched.html sched — Event scheduler  ]
+
+[ http://www.webwareforpython.org/TaskKit/Docs/Source/Docs/TaskKit.Scheduler.html TaskKit.Scheduler ]
+
+[ http://www.webwareforpython.org/Screenshots/ Webware application server that is fast, multi-threaded, easy to use ]
+
+[ http://www.doughellmann.com/PyMOTW/sched/ sched – Generic event scheduler ]
+
+[ http://code.activestate.com/recipes/114644/ A simple multi-threaded scheduler that enables tasks to be run at specified intervals ]
+
+[ http://viewvc.jboss.org/cgi-bin/viewvc.cgi/rhmessaging/mgmt/trunk/cumin/python/cumin/scheduler.py?revision=2944&view=markup&pathrev=2944 cumin scheduler.py ]
+
+[ http://www.koders.com/python/fid4DE2F248234C3F9E6B9E399189C5F4C672390CBA.aspx?s=cdef%3Atree+mdef%3Ainsert A plugin to schedule commands for later execution for LEO ]
+
+[ http://aigamedev.com/open/article/round-robin-multi-tasking/ A Round-Robin Scheduler for Cooperative Multi-Tasking Using Greenlets in Python ]
+
+[ http://python.active-venture.com/lib/scheduler-objects.html Scheduler objects ]
+
+[ http://www.mail-archive.com/ganglia-developers@lists.sourceforge.net/msg04983.html gmond python module interface ]
+
+[ http://www.kalab.com/freeware/pycron/pycron.htm pycron  ]
+
+[ http://www.oluyede.org/blog/2007/04/09/producerconsumer-in-python/  Producer/Consumer in Python ]
+
+[ http://www.razorvine.net/download/kronos.py Module that provides a cron-like task scheduler kronos.py ]
+
+[ http://www.stackless.com/wiki/Scheduling Stackless scheduling ]
+
+[ http://twistedmatrix.com/pipermail/twisted-python/2006-June/013525.html Scheduling tasks in twisted disscusion ]
+
+[ http://blog.brianbeck.com/post/55070874/message-queue Simple scheduled message queue in Python ]
+
+[ http://code.activestate.com/recipes/271607/ fiber scheduler ]
+
+[ http://www.eso.org/~almamgr/AlmaAcs/OnlineDocs/ACS_docs/py/Acspy.Util.Scheduler.html Acspy.Util.Scheduler ]
+
+[ http://sourceforge.net/projects/http-replicator HTTP Replicator is a general purpose caching proxy server written in python. It reduces bandwidth by merging concurrent downloads and building a local 'replicated' file hierarchy, similar to wget -r. The cache is also accessible through a web interface ]
+
+[ http://mauischeduler.sourceforge.net/ Maui Scheduler Open Cluster Software ]
+
+[ http://tek-tips.nethawk.net/ The Fear of Enterprise 2.0 - Stop The Conversation! ]
+
+[ http://code.google.com/p/pyss/ pyss is a simulator for researching scheduling algorithms in clusters ]
+
+[ http://code.google.com/p/myscheduler/ A python-web-based scheduler application in AJAX ]
+
+[ http://code.google.com/p/djangotaskscheduler/ The Django Task Scheduler provides capabilities to manage scheduled tasks from the web interface ]
+
+[ http://code.google.com/p/scheduler-py/ A simple scheduling module for Python ]
+
+[ http://code.google.com/p/esquedulin/ A short-term scheduling algorithm simulator for monoprocessor ]
+
+[ http://code.google.com/p/uthreads/wiki/StandardMicrothreadingPattern Description of a proposed standard microthreading programming pattern ]
+
+[ http://code.google.com/p/uthreads/wiki/UthreadsApi µThreads implements the StandardMicrothreadingPattern within Twisted Python ]
+
+[ http://code.google.com/p/foundation-engine/wiki/StacklessBoostPython Getting Stackless Python to play nice with Boost bindings ]
+
+[ http://code.google.com/p/stacklessexamples/wiki/StacklessExamples The project hosts multiple examples of stackless usage combined with other libraries ]
+
+[ http://code.google.com/p/fibranet/ FibraNet is a cooperative threading framework for Python ]
+
+[ http://code.google.com/p/livecoding/wiki/FileChanges A code reloading library for Python like in Erlang ]
+
+[ http://muharem.wordpress.com/2007/07/31/erlang-vs-stackless-python-a-first-benchmark/ rlang vs. Stackless python: a first benchmark ]
+
+[ http://www.ipmart-forum.pl/showthread.php?t=2804  SMS Python scheduler ]
+
+[http://docs.turbogears.org/1.0/Scheduler Scheduling Tasks with TurboGears]
+
+[http://www.ibm.com/developerworks/library/l-pygen.html Charming Python: Generator-based state machines]
+
+[https://develop.participatoryculture.org/trac/democracy/wiki/TheController Scheduler has a thread poo]
+
+[http://www.talkphp.com/advanced-php-programming/3245-php-socket-based-communication-python-server.html PHP / Python socket based communication with a python server]
+
+[http://folk.uio.no/sturlamo/python/multiprocessing-tutorial.pdf Using Python, multiprocessing and NumPy/SciPy for parallel numerical computing]
+
+[http://www.developer.com/lang/other/article.php/3756526 Easy Concurrency with Stackless Python]
+
+[http://www.indicthreads.com/1161/python-vs-powershell-dba-scripting/ Python vs PowerShell DBA Scripting]
+
+[http://freehackers.org/~tnagy/wafbook/single.html#task_schedulers The scheduler for executing the tasks - The task execution model]
+
+[http://www.gingergeeks.co.uk/pyloadl/credit.php Pyload and example of a meta-scheduler written in Python]
+
+
+
+[ http://code.google.com/p/enso/ An extensible, cross-platform, graphical command-line interface written in Python ]
+
+[ http://code.google.com/p/pytorreador/ pyTorreador - simply web client for rTorrent ]
+
+[ http://code.google.com/p/django-batchimport/ Allows for batch import of django model data via uploaded Microsoft Excel (or Open Office or CSV files saved as Excel) file ]
+
+[ http://code.google.com/p/xerblin/ Xerblin is a completely general Human-Computer interface ]
+
+[ http://code.google.com/p/klsmagiccube/ The main product of this project is a simulator of Rubik's cube. Our tenet is to find the optimal algorithm to recover a generic Rubik's cube ]
+
+[ http://code.google.com/p/stormforce/ Real-time lightning detection from your Boltek LD-250/StormTracker device ]
+= Details =
+
+TODO PLAN:
+  * review all similar projects
+  * looking for something special schedule solution
+  * coding interesting things based on great solution

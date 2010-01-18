@@ -1,0 +1,22 @@
+#summary Plugin For Fetching Unreaded Messages From Outlook Web Access (M$ OWA mail client)
+
+= Introduction =
+Plugin For Fetching Unreaded Messages From Outlook Web Access (M$ OWA mail client)
+
+
+= Details =
+This plugin is very usefull _for fetching unreaded e-mail messages_.
+Simple flow how to plugin work:
+ * fetch data from _url_
+ * login in owa M$ e-mail web client
+ * fetch all unreaded messages from owa M$ e-mail web client _recived emails_ page
+ * get all links (url) with specyfic regular expression from inputed content
+ * storage all subjects in to temporary file and/or dictionary
+
+
+Plugin input data:
+  * authorize data for _Outlook Web Access_ (login and password)
+  * temporary file location (default _/tmp_)
+
+Plugin output data:
+  * dictionary with e-mail message subject

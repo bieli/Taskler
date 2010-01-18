@@ -1,0 +1,162 @@
+Some information about *taskler* _simple task manager_.
+
+= Introduction to taskler =
+
+Below picture explains one simple way to understand how to *taskler* work.
+If you want to run a lot of tasks one by one in queue where each task are simple  *taskler* is exactly for you.
+
+[http://code.google.com/ http://bieli.net/taskler/taskler_flow_diagram.png]
+
+_Taskler flow diagram_
+
+= Details for tasks and plugins =
+
+We have only two general objects:
+  * _PluginProvider.py_ - for collecting and runnig plugins modules
+  * _TasksProvider.py_ - for collecting and runnig tasks modules
+
+Tasks are in *task* directory and plugins are in *plugins* directory.
+Each tasks are objects which extends *Task* object and for plugin has the similar rule.
+In *Task* object abstraction we have three methods:
+  * __init__
+  * task_set_verbose
+  * task_run
+and we have field _TASK_PLUGINS_ with definition our plugins witch will be running in the order from first to last defined in this dictionary. 
+
+It is example task code:
+{{{
+# -*- coding: utf-8 -*-
+
+from TasksProvider import Task, TasksProvider
+
+class ExamplePrintsMessagesTask(Task):
+    capabilities = ['task_run', 'task_set_verbose']
+    TASK_PLUGINS = ['GetConfigProfilePlugin', 'PrintHelloFromMethodsPlugin']
+    TASK_VERBOSE = False
+    tp = None
+
+    def __init__(self, task_plugins = None):
+        self.tp = TasksProvider()
+        if None == task_plugins:
+            self.tp.plugins_configure(self.TASK_PLUGINS)
+        else:
+            self.tp.plugins_configure(task_plugins)
+
+    def task_set_verbose(self, verbose):
+        self.TASK_VERBOSE = verbose
+
+    def task_run(self, data):
+        return self.tp.run(data)
+}}}
+
+
+
+All plugins have the simple abstraction and methods are the same in all plugins.
+Below it is example of _Hello world_ plugin code:
+{{{
+# -*- coding: utf-8 -*-
+
+from PluginProvider import Plugin
+
+class PrintHelloFromMethodsPlugin(Plugin):
+    capabilities   = ['reporter', 'init', 'deinit', 'next_item',
+                      'proccess', 'set_data', 'get_data',
+                      'get_data_count', 'set_verbose']
+    DATA           = []
+    VERBOSE_PREFIX = "plugin verbose mode >> "
+    VERBOSE        = False
+
+    def reporter(self):
+        return 'Hello %s!' % __name__
+
+    def plugin_init(self):
+        if True == self.VERBOSE:
+            print self.VERBOSE_PREFIX + 'init from "%s"!' % __name__
+
+        return True
+
+    def plugin_deinit(self):
+        if True == self.VERBOSE:
+            print self.VERBOSE_PREFIX + 'deinit from "%s"!' % __name__
+
+        return True
+
+    def plugin_proccess(self):
+        if True == self.VERBOSE:
+            print self.VERBOSE_PREFIX + 'proccess from "%s"!' % __name__
+
+        output_data = self.DATA
+
+        for data in self.DATA:
+            data = data + 10
+
+        self.DATA = output_data
+
+        return True
+
+    def plugin_next_item(self):
+        if True == self.VERBOSE:
+            print self.VERBOSE_PREFIX + 'next_item from "%s"!' % __name__
+
+        return True
+
+    def plugin_set_data(self, data):
+        if True == self.VERBOSE:
+            print self.VERBOSE_PREFIX + 'set_data from "%s"!' % __name__
+
+        self.DATA = data
+        return True
+
+    def plugin_get_data(self):
+        if True == self.VERBOSE:
+            print self.VERBOSE_PREFIX + 'get_data from "%s"!' % __name__
+
+        return self.DATA
+
+    def plugin_get_data_count(self):
+        proccesed_data_length = len(self.DATA)
+
+        if True == self.VERBOSE:
+            print self.VERBOSE_PREFIX + 'get_data_count from "%s"!' % __name__
+            print self.VERBOSE_PREFIX + 'proccesed_data_length = "%d"!' % \
+                proccesed_data_length
+
+        return proccesed_data_length
+
+
+    def plugin_set_verbose(self, verbose):
+        self.VERBOSE = verbose
+        return True
+}}}
+
+
+In main code we have a loop who runs task queue with himself plugins queue.
+
+= Running task =
+
+We can run our task for example like this _taskler_example.py_:
+{{{
+# -*- coding: utf-8 -*-
+
+from TasksProvider import TasksProvider
+
+if __name__ == "__main__":
+#    tasks_to_run  = ['ExamplePrintsMessagesTask', 'CsvReaderFileStoregeTask']
+    tasks_to_run  = ['ExamplePrintsMessagesTask']
+    inputed_data  = [1, 2]
+    outputed_data = None
+
+    # run tasks example
+    tasks_provider = TasksProvider()
+    tasks_provider.plugin_set_verbose(True)
+    tasks_provider.task_set_verbose(False)
+    outputed_data = tasks_provider.run_tasks(tasks_to_run, inputed_data)
+
+    print outputed_data
+}}}
+
+by folowing command from *nix/Linux/*BSD terminal:
+{{{
+python taskler_example.py
+}}}
+
