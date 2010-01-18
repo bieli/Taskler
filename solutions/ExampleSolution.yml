@@ -1,0 +1,9 @@
+takler_solution:
+  task_set_verbose:   True
+  plugin_set_verbose: True
+  tasks:              
+    - ExampleGetRandomDataTask
+    - ExamplePrintsMessagesTask
+
+  input_data:         [10, 20, 3, 11]
+

@@ -7,3 +7,4 @@
  - add copyright heads for all project files
  - refactoring
  - add Exceptions and try sections
+ - add to RunSolution run script more inputed tasks for running in one command

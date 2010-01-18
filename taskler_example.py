@@ -8,6 +8,7 @@ if __name__ == "__main__":
     inputed_data  = [1, 2]
     outputed_data = None
 
+
     # run tasks example
     tasks_provider = TasksProvider()
 #    tasks_provider.plugin_set_verbose(True)

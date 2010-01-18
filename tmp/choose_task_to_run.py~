@@ -1,0 +1,59 @@
+#!/usr/bin/python
+
+# -*- coding: utf-8 -*-
+
+import os, glob
+from snack import *
+from TasksProvider import TasksProvider
+
+
+def choose_tast_to_run():
+  defined_tasks = []
+
+  exists_tasks = glob.glob('../tasks/*Task.py')
+
+  exists_tasks.sort()
+
+  for task in exists_tasks:
+    if os.path.isfile(task):
+      (path, task_full_filename) = os.path.split(task)
+      (task_filename, file_extension) =  os.path.splitext(task_full_filename)
+      defined_tasks.append(task_filename)
+      #print task_filename
+
+  tasks_tuple = tuple(defined_tasks)
+
+  screen = SnackScreen()
+
+  #screen.helpCallback(help)
+
+  list_tasks_results = ListboxChoiceWindow(screen, 'Taskler task runner', 
+        'Choose one task from the list below for running:', 
+        tasks_tuple, default = 1,
+        help = "Select one taskt for start")
+
+
+  screen.finish()
+
+  print 'list_tasks_results: ', list_tasks_results
+
+
+if __name__ == "__main__":
+    tast_to_run_name = choose_tast_to_run()
+
+    if 'Ok' == tast_to_run_name:
+      tasks_to_run  = list(tast_to_run_name[1])
+      inputed_data  = [1, 2]
+      outputed_data = None
+
+      # run tasks
+      tasks_provider = TasksProvider()
+      tasks_provider.plugin_set_verbose(True)
+      tasks_provider.plugin_set_verbose(False)
+      tasks_provider.task_set_verbose(False)
+      outputed_data = tasks_provider.run_tasks(tasks_to_run, inputed_data)
+
+      print outputed_data
+    else:
+      print "No task to run selected !"
+

@@ -86,6 +86,8 @@ class TasksProvider(Task):
 
         found_tasks = []
         for task in all_tasks:
+#            print "[ DEBUG ] task: " + str(task)
+#            print "[ DEBUG ] all_tasks: " + str(all_tasks)
             if task in tasks:
                 found_tasks.append(task)
 
