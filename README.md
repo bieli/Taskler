@@ -1,24 +1,28 @@
-= Taskler overview =
+Taskler overview
+==================================
 
-*Taskler* is a simple _task manager_ for any frequently *tasks* written in Python.
+***Taskler*** is a simple _task manager_ for any frequently *tasks* written in Python.
 It supports the creation of _complex tasks_ with the use of _specific and simple_ *plug-ins*.
 Each plug-in has a certain interface and performs one small operations.
 Each forward to the next queue plug-in plug-ins results for its action, so that it is possible to processing many information with many data transactions.
 In future versions I would like to add some maybe parrallel, multiprocess and multithreading schedules. At the moment flow in solution is very simple to implementation and populating.
 
-== Tasks ==
+Tasks
+-----
 
 There are simple group for declaring required (used) plug-ins for proccess work.
 
 ![Taskler flow diagram](https://raw.githubusercontent.com/bieli/Taskler/master/docs/taskler_flow_diagram.png)
 
 
-== Plug-ins ==
+Plug-ins
+--------
 
 It is a small class plug-ins code for doing simple unique proccess in _run_ method.
 It is waiting for input data from other plugins and serving outputs results for other plugins. Each plug-ins have dedicated inteface. In future mayby it will be _json_ but now it is a array, list data structure format.
 
-=== Standard plug-ins description ===
+Standard plug-ins description
+-----------------------------
  * fetch data from _url_
  * login in owa M$ e-mail web client
  * fetch all unreaded messages from owa M$ e-mail web client _recived emails_ page
@@ -30,12 +34,14 @@ It is waiting for input data from other plugins and serving outputs results for 
  * get all links (url) for images with specyfic regular expression from inputed content
 
 
-== Solutions ==
+Solutions
+---------
 
 It is a group of tasks. We can create onededicated file in YAML format for our solution.
 For example we need run My1Task (witch runs plugins Ex1Plugin and Ex2Plugin) and next 
 run other task My2Task (witch runs plugins Ex3Plugin). All configured in simple text format:
 
+```
 {{{
 takler_solution:
   task_set_verbose:   True
@@ -46,9 +52,11 @@ takler_solution:
 
   input_data:         [10, 20, 3, 11]
 }}}
+```
 
-=== ExampleSolution run and output ===
-
+ExampleSolution run and output
+---------
+```
 $ python RunSolution.py ExampleSolution
 
 RunSolution start with argument: "ExampleSolution"
@@ -92,4 +100,18 @@ plugin verbose mode >> deinit from "GetConfigProfilePlugin"!
 plugin verbose mode >> deinit from "PrintHelloFromMethodsPlugin"!
 --- Task "ExamplePrintsMessagesTask" return output data: "[10, 50, 0, 20]"
 [10, 50, 0, 20]
+```
 
+TODO
+----
+- [x] runnable code with plugins and first ExampleSoution
+- [x] clear README file (add flow diagram Taskler image)
+- [ ] add unit tests with Travis CI (Py27, Py34)
+- [ ] catalog and logical structure for Taskler's "projects" (for included each tasks for one thing)
+- [ ] add plugin to logs/events storage in LOG standard files (with rotation)
+- [ ] create libs catalog and move Notifications/GetUrlContent object/method
+- [ ] refactoring plugins
+- [ ] add copyright heads for all project files
+- [ ] refactoring
+- [ ] add Exceptions and try sections
+- [ ] use this project http://code.google.com/p/pyactiveresource/ for share/storage data beetwen tasks in one solution
