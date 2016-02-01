@@ -10,6 +10,9 @@ In future versions I would like to add some maybe parrallel, multiprocess and mu
 
 There are simple group for declaring required (used) plug-ins for proccess work.
 
+![Taskler flow diagram](https://raw.githubusercontent.com/bieli/Taskler/master/docs/taskler_flow_diagram.png)
+
+
 == Plug-ins ==
 
 It is a small class plug-ins code for doing simple unique proccess in _run_ method.
