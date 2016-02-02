@@ -3,14 +3,14 @@
 
 """Connect to and interact with a REST server and its objects."""
 
-
-import new
 import re
 import sys
 import urllib
+from string import Template
+
+import new
 import urllib2
 import urlparse
-from string import Template
 from pyactiveresource import connection
 from pyactiveresource import formats
 from pyactiveresource import util
@@ -85,7 +85,7 @@ class Errors(object):
         attribute_keys = self.base.attributes.keys()
         try:
             messages = util.xml_to_dict(
-                    xml_string, saveroot=True)['errors']['error']
+                xml_string, saveroot=True)['errors']['error']
             if not isinstance(messages, list):
                 messages = [messages]
         except util.Error:
@@ -94,7 +94,7 @@ class Errors(object):
             attr_name = message.split()[0]
             key = util.underscore(attr_name)
             if key in attribute_keys:
-                self.add(key, message[len(attr_name)+1:])
+                self.add(key, message[len(attr_name) + 1:])
             else:
                 self.add_to_base(message)
 
@@ -167,7 +167,6 @@ class ResourceMeta(type):
         if '_plural' not in new_attrs or not new_attrs['_plural']:
             new_attrs['_plural'] = util.pluralize(new_attrs['_singular'])
 
-
         klass = type.__new__(mcs, name, bases, new_attrs)
 
         # if _site is defined, use the site property to ensure that user
@@ -193,8 +192,8 @@ class ResourceMeta(type):
         return cls._user
 
     def set_user(cls, value):
-      cls._connection = None
-      cls._user = value
+        cls._connection = None
+        cls._user = value
 
     user = property(get_user, set_user, None,
                     'A username for HTTP Basic Auth.')
@@ -233,6 +232,7 @@ class ResourceMeta(type):
 
     def set_headers(cls, value):
         cls._headers = value
+
     headers = property(get_headers, set_headers, None,
                        'HTTP headers.')
 
@@ -242,6 +242,7 @@ class ResourceMeta(type):
     def set_timeout(cls, value):
         cls._connection = None
         cls._timeout = value
+
     timeout = property(get_timeout, set_timeout, None,
                        'Socket timeout for HTTP operations')
 
@@ -250,14 +251,16 @@ class ResourceMeta(type):
 
     def set_format(cls, value):
         cls._format = value
+
     format = property(get_format, set_format, None,
-                       'A format object for encoding/decoding requests')
+                      'A format object for encoding/decoding requests')
 
     def get_plural(cls):
         return cls._plural
 
     def set_plural(cls, value):
         cls._plural = value
+
     plural = property(get_plural, set_plural, None,
                       'The plural name of this object type.')
 
@@ -266,6 +269,7 @@ class ResourceMeta(type):
 
     def set_singular(cls, value):
         cls._singular = value
+
     singular = property(get_singular, set_singular, None,
                         'The singular name of this object type.')
 
@@ -279,7 +283,7 @@ class ResourceMeta(type):
     def set_prefix_source(cls, value):
         """Set the prefix source, which will be rendered into the prefix."""
         cls._prefix_source = value
-    
+
     prefix_source = property(get_prefix_source, set_prefix_source, None,
                              'prefix for lookups for this type of object.')
 
@@ -309,7 +313,7 @@ class ActiveResource(object):
                             nested URLs.
         """
         if attributes is None:
-          attributes = {}
+            attributes = {}
         self.klass = self.__class__
         self.attributes = {}
         if prefix_options:
@@ -416,7 +420,7 @@ class ActiveResource(object):
         Returns:
             A tuple containing (prefix_options, query_options)
         """
-        #TODO(mrroach): figure out prefix_options
+        # TODO(mrroach): figure out prefix_options
         prefix_options = {}
         query_options = {}
         for key, value in options.items():
@@ -457,7 +461,7 @@ class ActiveResource(object):
         Raises:
             connection.ConnectionError: On any error condition.
         """
-        #TODO(mrroach): allow from_ to be a string-generating function
+        # TODO(mrroach): allow from_ to be a string-generating function
         path = from_ + cls._query_string(query_options)
         return cls._build_object(cls.connection.get(path, cls.headers))
 
@@ -523,7 +527,7 @@ class ActiveResource(object):
         """
         if query_options:
             query_options = dict([(key, val.encode('utf-8'))
-                                 for key, val in query_options.items()])
+                                  for key, val in query_options.items()])
             return '?' + urllib.urlencode(query_options)
         else:
             return ''
@@ -544,11 +548,11 @@ class ActiveResource(object):
             The path (relative to site) to the element formatted with the query.
         """
         return '%(prefix)s/%(plural)s/%(id)s.%(format)s%(query)s' % {
-                'prefix': cls._prefix(prefix_options),
-                'plural': cls._plural,
-                'id': id_,
-                'format': cls.format.extension,
-                'query': cls._query_string(query_options)}
+            'prefix': cls._prefix(prefix_options),
+            'plural': cls._plural,
+            'id': id_,
+            'format': cls.format.extension,
+            'query': cls._query_string(query_options)}
 
     @classmethod
     def _collection_path(cls, prefix_options=None, query_options=None):
@@ -569,10 +573,10 @@ class ActiveResource(object):
             The path (relative to site) to this type of collection.
         """
         return '%(prefix)s/%(plural)s.%(format)s%(query)s' % {
-                'prefix': cls._prefix(prefix_options),
-                'plural': cls._plural,
-                'format': cls._format.extension,
-                'query': cls._query_string(query_options)}
+            'prefix': cls._prefix(prefix_options),
+            'plural': cls._plural,
+            'format': cls._format.extension,
+            'query': cls._query_string(query_options)}
 
     @classmethod
     def _custom_method_collection_url(cls, method_name, options):
@@ -694,10 +698,10 @@ class ActiveResource(object):
             if isinstance(value, list):
                 new_value = []
                 for i in value:
-                  if isinstance(i, dict):
-                      new_value.append(i)
-                  else:
-                      new_value.append(i.to_dict())
+                    if isinstance(i, dict):
+                        new_value.append(i)
+                    else:
+                        new_value.append(i.to_dict())
                 values[key] = new_value
             elif isinstance(value, ActiveResource):
                 values[key] = value.to_dict()
@@ -729,8 +733,8 @@ class ActiveResource(object):
             None
         """
         attributes = self.klass.connection.get(
-                self._element_path(self.id, self._prefix_options),
-                self.klass.headers)
+            self._element_path(self.id, self._prefix_options),
+            self.klass.headers)
         self._update(attributes)
 
     def save(self):
@@ -747,14 +751,14 @@ class ActiveResource(object):
         try:
             if self.id:
                 response = self.klass.connection.put(
-                        self._element_path(self.id, self._prefix_options),
-                        self.klass.headers,
-                        data=self.to_xml())
+                    self._element_path(self.id, self._prefix_options),
+                    self.klass.headers,
+                    data=self.to_xml())
             else:
                 response = self.klass.connection.post(
-                        self._collection_path(self._prefix_options),
-                        self.klass.headers,
-                        data=self.to_xml())
+                    self._collection_path(self._prefix_options),
+                    self.klass.headers,
+                    data=self.to_xml())
                 new_id = self._id_from_response(response)
                 if new_id:
                     self.attributes['id'] = new_id
@@ -805,8 +809,8 @@ class ActiveResource(object):
             None
         """
         self.klass.connection.delete(
-                self._element_path(self.id, self._prefix_options),
-                self.klass.headers)
+            self._element_path(self.id, self._prefix_options),
+            self.klass.headers)
 
     def __getattr__(self, name):
         """Retrieve the requested attribute if it exists.

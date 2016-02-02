@@ -11,6 +11,7 @@ import decimal
 import re
 import time
 import datetime
+
 try:
     import yaml
 except ImportError:
@@ -21,6 +22,7 @@ try:
 except ImportError:
     try:
         from xml.utils import iso8601
+
         def date_parse(time_string):
             """Return a datetime object for the given ISO8601 string.
 
@@ -30,7 +32,7 @@ except ImportError:
                 A datetime.datetime object.
             """
             return datetime.datetime.utcfromtimestamp(
-                    iso8601.parse(time_string))
+                iso8601.parse(time_string))
     except ImportError:
         date_parse = None
 
@@ -102,7 +104,7 @@ IRREGULAR = [
     ('child', 'children'),
     ('sex', 'sexes'),
     ('move', 'moves'),
-    #('cow', 'kine') WTF?
+    # ('cow', 'kine') WTF?
 ]
 
 UNCOUNTABLES = ['equipment', 'information', 'rice', 'money', 'species',
@@ -152,6 +154,7 @@ def pluralize(singular):
     for i in PLURALIZE_PATTERNS:
         if re.search(i[0], singular):
             return re.sub(i[0], i[1], singular)
+
 
 def singularize(plural):
     """Convert plural word to its singular form.
@@ -230,8 +233,8 @@ def serialize(value, element):
         None
     """
     if value is None:
-      element.set('nil', 'true')
-      return
+        element.set('nil', 'true')
+        return
 
     for serializer in SERIALIZERS + [DEFAULT_SERIALIZER]:
         if isinstance(value, serializer['type']):
@@ -255,7 +258,7 @@ def to_xml(obj, root='object', pretty=False, header=True):
         root_element.set('type', 'array')
         for i in obj:
             element = ET.fromstring(
-                    to_xml(i, root=singularize(root), header=False))
+                to_xml(i, root=singularize(root), header=False))
             root_element.append(element)
     else:
         for key, value in obj.iteritems():
@@ -326,7 +329,7 @@ def xml_to_dict(xmlobj, saveroot=False):
         else:
             try:
                 timestamp = calendar.timegm(
-                        time.strptime(element.text, '%Y-%m-%dT%H:%M:%S+0000'))
+                    time.strptime(element.text, '%Y-%m-%dT%H:%M:%S+0000'))
 
                 return datetime.datetime.utcfromtimestamp(timestamp)
             except ValueError, err:

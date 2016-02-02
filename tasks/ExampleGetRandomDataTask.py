@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from TasksProvider import Task, TasksProvider
+from tasks.TasksProvider import Task
+from tasks import TasksProvider
+
 
 class ExampleGetRandomDataTask(Task):
     capabilities = ['task_run', 'task_set_verbose']
@@ -8,14 +10,14 @@ class ExampleGetRandomDataTask(Task):
     TASK_VERBOSE = True
     tp = None
 
-    def __init__(self, task_plugins = None):
-        self.tp = TasksProvider()
+    def __init__(self, task_plugins=None):
+        self.tp = TasksProvider.TasksProvider()
         if None == task_plugins:
             self.tp.plugins_configure(self.TASK_PLUGINS)
         else:
             self.tp.plugins_configure(task_plugins)
 
-    def task_set_verbose(self, verbose):
+    def set_verbose(self, verbose):
         self.TASK_VERBOSE = verbose
 
     def task_run(self, data):

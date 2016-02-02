@@ -8,13 +8,14 @@ __author__ = 'Mark Roach (mrroach@google.com)'
 import datetime
 import decimal
 import unittest
-from pyactiveresource import util
 from pprint import pprint
+
+from pyactiveresource import util
 
 
 def diff_dicts(d1, d2):
     """Print the differences between two dicts. Useful for troubleshooting."""
-    pprint([(k,v) for k,v in d2.items()
+    pprint([(k, v) for k, v in d2.items()
             if v != d1[k]])
 
 
@@ -96,23 +97,23 @@ class UtilTest(unittest.TestCase):
           </topics>'''
 
         expected_topic_dict = {
-          'title': 'The First Topic',
-          'author_name': 'David',
-          'id': 1,
-          'approved': False,
-          'replies_count': 0,
-          'replies_close_in': 2592000000L,
-          'written_on': datetime.date(2003, 7, 16),
-          'viewed_at': util.date_parse('2003-07-16T09:28Z'),
-          'content': 'Have a nice day',
-          'author_email_address': 'david@loudthinking.com',
-          'parent_id': None}
+            'title': 'The First Topic',
+            'author_name': 'David',
+            'id': 1,
+            'approved': False,
+            'replies_count': 0,
+            'replies_close_in': 2592000000L,
+            'written_on': datetime.date(2003, 7, 16),
+            'viewed_at': util.date_parse('2003-07-16T09:28Z'),
+            'content': 'Have a nice day',
+            'author_email_address': 'david@loudthinking.com',
+            'parent_id': None}
 
         self.assertEqual(expected_topic_dict,
                          util.xml_to_dict(topics_xml)[0])
         self.assertEqual(
-                expected_topic_dict,
-                util.xml_to_dict(topics_xml, saveroot=True)['topics'][0])
+            expected_topic_dict,
+            util.xml_to_dict(topics_xml, saveroot=True)['topics'][0])
 
     def test_xml_to_dict_empty_array(self):
         blog_xml = '''<blog>
@@ -212,8 +213,8 @@ class UtilTest(unittest.TestCase):
             'weight': 0.5,
             'image': {'type': 'ProductImage', 'filename': 'image.gif'}}
         self.assertEqual(
-                expected_product_dict,
-                util.xml_to_dict(product_xml, saveroot=True)['product'])
+            expected_product_dict,
+            util.xml_to_dict(product_xml, saveroot=True)['product'])
 
     def test_xml_to_dict_errors_on_empty_string(self):
         self.assertRaises(Exception, util.xml_to_dict, '')

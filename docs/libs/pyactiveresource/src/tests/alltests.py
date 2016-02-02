@@ -5,12 +5,13 @@
 
 import unittest
 
+
 def suite():
     modules_to_test = (
         'activeresource_test',
         'connection_test',
         'util_test'
-        )
+    )
     alltests = unittest.TestSuite()
     for name in modules_to_test:
         mod = __import__(name)
@@ -18,6 +19,7 @@ def suite():
             mod = getattr(mod, token)
         alltests.addTest(unittest.findTestCases(mod, suiteClass=None))
     return alltests
+
 
 if __name__ == '__main__':
     unittest.main(defaultTest='suite')

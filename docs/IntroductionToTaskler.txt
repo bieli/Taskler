@@ -42,7 +42,7 @@ class ExamplePrintsMessagesTask(Task):
         else:
             self.tp.plugins_configure(task_plugins)
 
-    def task_set_verbose(self, verbose):
+    def set_verbose(self, verbose):
         self.TASK_VERBOSE = verbose
 
     def task_run(self, data):
@@ -124,7 +124,7 @@ class PrintHelloFromMethodsPlugin(Plugin):
         return proccesed_data_length
 
 
-    def plugin_set_verbose(self, verbose):
+    def set_verbose(self, verbose):
         self.VERBOSE = verbose
         return True
 }}}
@@ -148,8 +148,8 @@ if __name__ == "__main__":
 
     # run tasks example
     tasks_provider = TasksProvider()
-    tasks_provider.plugin_set_verbose(True)
-    tasks_provider.task_set_verbose(False)
+    tasks_provider.set_verbose(True)
+    tasks_provider.set_verbose(False)
     outputed_data = tasks_provider.run_tasks(tasks_to_run, inputed_data)
 
     print outputed_data

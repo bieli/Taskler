@@ -1,7 +1,9 @@
 from gasp import *
 
+
 def distance(x1, y1, x2, y2):
-    return ((x2 - x1)**2 + (y2 - y1)**2)**0.5
+    return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+
 
 begin_graphics(800, 600, title="Catch", background=color.YELLOW)
 set_speed(120)

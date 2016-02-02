@@ -4,7 +4,7 @@
 # messages in system tray bar.
 #
 # Self-test usage info:
-#  Usage plugin like script from command line
+# Usage plugin like script from command line
 #  $ __main__ <title> <message>
 #  ---
 #  <title>   - title for notification bubble
@@ -15,18 +15,22 @@
 # @todo:       clear code, add more comments
 
 try:
-    from PluginProvider import Plugin
+    from plugins.PluginProvider import Plugin
+
     PluginProvider_is_available = True
 except ImportError:
     class Plugin:
         pass
+
     PluginProvider_is_available = False
 
 try:
     import pynotify
+
     pynotify_is_available = True
 except ImportError:
     pynotify_is_available = False
+
 
 class Notification:
     """This class handles the display of visual notification bubbles."""
@@ -34,7 +38,7 @@ class Notification:
     def __init__(self, settings, appname):
         """Initialize the class."""
 
-        self.notifications = []    # This list holds the instances of all notifications
+        self.notifications = []  # This list holds the instances of all notifications
 
         if pynotify_is_available is not True:
             return None
@@ -43,13 +47,19 @@ class Notification:
         pynotify.init(appname)
 
     def script_usage(self):
-        print "Usage plugin like script from command line:"
-        print "$ %s <title> <message>" % (self.__module__)
-        print "---"
-        print "<title>   - title for notification bubble"
-        print "<message> - message for notification bubble"
+        print
+        "Usage plugin like script from command line:"
+        print
+        "$ %s <title> <message>" % (self.__module__)
+        print
+        "---"
+        print
+        "<title>   - title for notification bubble"
+        print
+        "<message> - message for notification bubble"
 
-    def showNotification(self, title, message, urgency=0, expires=15000, category='transfer', image='../data/qttube-32x32.png'):
+    def showNotification(self, title, message, urgency=0, expires=15000, category='transfer',
+                         image='../data/qttube-32x32.png'):
         """Displays a notification bubble."""
 
         if pynotify_is_available is not True:
@@ -88,36 +98,40 @@ class Notification:
 
         return self.notifications
 
+
 class SystemTrayMessageNotyficationPlugin(Plugin):
-    capabilities   = ['reporter', 'init', 'deinit', 'next_item',
-                      'proccess', 'set_data', 'get_data',
-                      'get_data_count', 'set_verbose']
-    DATA           = []
+    capabilities = ['reporter', 'init', 'deinit', 'next_item',
+                    'proccess', 'set_data', 'get_data',
+                    'get_data_count', 'set_verbose']
+    DATA = []
     VERBOSE_PREFIX = "plugin verbose mode >> "
-    VERBOSE        = False
+    VERBOSE = False
 
     def reporter(self):
         return 'Hello %s!' % __name__
 
     def plugin_init(self):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'init from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'init from "%s"!' % __name__
 
         return True
 
     def plugin_deinit(self):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'deinit from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'deinit from "%s"!' % __name__
 
         return True
 
     def plugin_proccess(self):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'proccess from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'proccess from "%s"!' % __name__
 
         output_data = self.DATA
 
-#        print str(self.DATA)
+        #        print str(self.DATA)
 
         for message in self.DATA['test_msg']:
             self.show_notification(message['title'], message['message'],
@@ -129,20 +143,23 @@ class SystemTrayMessageNotyficationPlugin(Plugin):
 
     def plugin_next_item(self):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'next_item from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'next_item from "%s"!' % __name__
 
         return True
 
     def plugin_set_data(self, data):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'set_data from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'set_data from "%s"!' % __name__
 
         self.DATA = data
         return True
 
     def plugin_get_data(self):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'get_data from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'get_data from "%s"!' % __name__
 
         return self.DATA
 
@@ -150,19 +167,21 @@ class SystemTrayMessageNotyficationPlugin(Plugin):
         proccesed_data_length = len(self.DATA)
 
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'get_data_count from "%s"!' % __name__
-            print self.VERBOSE_PREFIX + 'proccesed_data_length = "%d"!' % \
-                proccesed_data_length
+            print
+            self.VERBOSE_PREFIX + 'get_data_count from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'proccesed_data_length = "%d"!' % \
+                                  proccesed_data_length
 
         return proccesed_data_length
 
 
-    def plugin_set_verbose(self, verbose):
+    def set_verbose(self, verbose):
         self.VERBOSE = verbose
         return True
 
-    def show_notification(self, title, message, app_name = '',
-                          app_sub_name = ''):
+    def show_notification(self, title, message, app_name='',
+                          app_sub_name=''):
         """ show notification in system desktop """
 
         #TODO: need check if X sever is exists (and display is correct?)
@@ -176,7 +195,8 @@ if __name__ == "__main__" and PluginProvider_is_available == False:
     import sys
 
     if pynotify_is_available == False:
-        print "Please install 'pynotify' module for Python in your system !"
+        print
+        "Please install 'pynotify' module for Python in your system !"
         sys.exit()
 
     if (len(sys.argv) < 2):

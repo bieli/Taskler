@@ -43,7 +43,7 @@ run other task My2Task (witch runs plugins Ex3Plugin). All configured in simple 
 
 ```
 {{{
-takler_solution:
+taskler_solution:
   task_set_verbose:   True
   plugin_set_verbose: True
   tasks:              
@@ -60,7 +60,7 @@ ExampleSolution run and output
 $ python RunSolution.py ExampleSolution
 
 RunSolution start with argument: "ExampleSolution"
-{'takler_solution': {'input_data': [10, 20, 3, 11], 'plugin_set_verbose': True, 'tasks': ['ExampleGetRandomDataTask', 'ExamplePrintsMessagesTask'], 'task_set_verbose': True}}
+{'taskler_solution': {'input_data': [10, 20, 3, 11], 'plugin_set_verbose': True, 'tasks': ['ExampleGetRandomDataTask', 'ExamplePrintsMessagesTask'], 'task_set_verbose': True}}
 --- Input data for task "ExampleGetRandomDataTask": "[10, 20, 3, 11]"
 Searched tasks '['ExampleGetRandomDataTask']'
 Found tasks '[]'

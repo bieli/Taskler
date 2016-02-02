@@ -1,0 +1,18 @@
+sudo: false
+
+language: python
+
+python:
+ - "2.7"
+ - "3.4"
+ - "pypy"
+
+#install: pip install .
+
+#before_script:
+#  - pip install .
+
+script: python -m unittest discover ./Taskler/tests/
+
+notifications:
+  email: false

@@ -1,4 +1,5 @@
-import imp, sys
+import imp
+import sys
 
 # create a module
 modname = 'mypackage.mymod'
@@ -13,22 +14,25 @@ else:
     sys.modules[modname] = mod
 
     # get the package module
-    packagemod = __import__( 'mypackage, globals(), locals(), ['mypackage'] )
+    packagemod = __import__('mypackage, globals(), locals(), ['
+    mypackage
+    '] )
 
     # add module there too
     setattr(packagemod, 'mymod', mod)
 
-# our namespace is the module dictionary
-namespace = mod.__dict__
+    # our namespace is the module dictionary
+    namespace = mod.__dict__
 
-# test whether this has been done already
-if not hasattr(mod, 'myClass'):
+    # test whether this has been done already
+    if not hasattr(mod, 'myClass'):
     # compile and exec dynamic code in the module
 
-    exec compile(pythoncode, '', 'exec') in namespace
+        exec
+    compile(pythoncode, '', 'exec') in namespace
 
-# get the extension
-extension = namespace.get('myClass')
+    # get the extension
+    extension = namespace.get('myClass')
 
-# instanciate the object
-myOb = extension()
+    # instanciate the object
+    myOb = extension()

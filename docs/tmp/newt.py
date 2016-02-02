@@ -1,19 +1,20 @@
 #!/usr/bin/python
 
 from snack import *
-import sys
+
 
 def help(screen, text):
     raise ValueError, "foo"
-    ButtonChoiceWindow(screen, "Help", text, help = "Help on help")
+    ButtonChoiceWindow(screen, "Help", text, help="Help on help")
+
 
 t = TextboxReflowed(25, "Some text which needs to be wrapped at a good place.")
-li = Listbox(5, width = 20, returnExit = 1)
+li = Listbox(5, width=20, returnExit=1)
 li.append("First", "f")
 li.append("Second", "s")
 li.insert("Another", "a", "f")
 li.delete("a")
-ct = CheckboxTree(5, scroll = 1)
+ct = CheckboxTree(5, scroll=1)
 ct.append("Colors")
 ct.addItem("Red", (0, snackArgs['append']), "red item key")
 ct.addItem("Yellow", (0, snackArgs['append']))
@@ -45,28 +46,31 @@ cb = Checkbox("checkbox")
 r1 = SingleRadioButton("Radio 1", None, 1)
 r2 = SingleRadioButton("Radio 2", r1)
 
+
 def something():
-    print hello
+    print
+    hello
+
 
 screen = SnackScreen()
 
 screen.helpCallback(help)
 
 foo = EntryWindow(screen, 'Title', 'This is some text for the entry window',
-     ['prompt', 'more', 'info'])
+                  ['prompt', 'more', 'info'])
 
-lbcw = ListboxChoiceWindow(screen, 'Title 2', 
-      'Choose one item from the list below:', 
-      ('One', 'Two', 'Three', 'Four', 'Five'), default = 2,
-      help = "Help for a listbox")
+lbcw = ListboxChoiceWindow(screen, 'Title 2',
+                           'Choose one item from the list below:',
+                           ('One', 'Two', 'Three', 'Four', 'Five'), default=2,
+                           help="Help for a listbox")
 
 sg = Grid(2, 3)
-sg.setField(b, 0, 0, anchorLeft = 1)
-sg.setField(e, 1, 0, (1, 0, 0, 0), anchorLeft = 1, anchorTop = 1)
-sg.setField(l, 0, 1, (0, 1, 0, 0), anchorLeft = 1)
-sg.setField(cb, 1, 1, (1, 1, 0, 0), anchorLeft = 1)
-sg.setField(r1, 0, 2, (0, 0, 0, 0), anchorLeft = 1)
-sg.setField(r2, 1, 2, (1, 0, 0, 0), anchorLeft = 1)
+sg.setField(b, 0, 0, anchorLeft=1)
+sg.setField(e, 1, 0, (1, 0, 0, 0), anchorLeft=1, anchorTop=1)
+sg.setField(l, 0, 1, (0, 1, 0, 0), anchorLeft=1)
+sg.setField(cb, 1, 1, (1, 1, 0, 0), anchorLeft=1)
+sg.setField(r1, 0, 2, (0, 0, 0, 0), anchorLeft=1)
+sg.setField(r2, 1, 2, (1, 0, 0, 0), anchorLeft=1)
 
 g = Grid(1, 3)
 
@@ -97,18 +101,26 @@ g.add(ct, 0, 0, (0, 0, 0, 1))
 g.add(Button("Ok"), 0, 1)
 g.runOnce()
 
-
 screen.finish()
 
-print "val", e.value()
-print "check", cb.value()
-print "r1", r1.selected()
-print "listbox", li.current()
+print
+"val", e.value()
+print
+"check", cb.value()
+print
+"r1", r1.selected()
+print
+"listbox", li.current()
 # returns a tuple of the wrapped text, the actual width, and the actual height
-print res
+print
+res
 
-print foo
-print 'lbcw', lbcw
-print "ct selected", ct.getSelection()
-print "ct current", ct.getCurrent()
+print
+foo
+print
+'lbcw', lbcw
+print
+"ct selected", ct.getSelection()
+print
+"ct current", ct.getCurrent()
 

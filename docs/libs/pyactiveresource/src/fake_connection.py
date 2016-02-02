@@ -6,8 +6,10 @@
 __author__ = 'Mark Roach (mrroach@google.com)'
 
 import urllib
+
 from pyactiveresource import connection
 from pyactiveresource import formats
+
 
 class Error(Exception):
     """The base exception class for this module."""
@@ -32,6 +34,7 @@ class FakeConnection(object):
     >>> Foo.find(1)
     foo(1)
     """
+
     def __init__(self, format=formats.XMLFormat):
         """Constructor for FakeConnection object."""
         self.format = format
@@ -68,7 +71,7 @@ class FakeConnection(object):
         if response_headers is None:
             response_headers = {}
         self._request_map.setdefault(method, []).append(
-                ((path_only, query, headers, data), (body, response_headers)))
+            ((path_only, query, headers, data), (body, response_headers)))
 
     def _lookup_response(self, method, path, headers, data):
         path_only, query = self._split_path(path)
@@ -78,20 +81,20 @@ class FakeConnection(object):
                 return connection.Response(200, response_body, response_headers)
         raise Error('Invalid or unknown request: %s %s\n%s' %
                     (path, headers, data))
-        
+
     def get(self, path, headers=None):
         """Perform an HTTP get request."""
         return self.format.decode(
             self._lookup_response('get', path, headers, None).body)
-        
+
     def post(self, path, headers=None, data=None):
         """Perform an HTTP post request."""
         return self._lookup_response('post', path, headers, data)
-    
+
     def put(self, path, headers=None, data=None):
         """Perform an HTTP post request."""
         return self._lookup_response('put', path, headers, data)
-    
+
     def delete(self, path, headers=None):
         """Perform an HTTP delete request."""
         return self._lookup_response('delete', path, headers, None)

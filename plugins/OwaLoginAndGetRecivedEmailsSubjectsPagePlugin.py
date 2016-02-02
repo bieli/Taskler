@@ -4,7 +4,7 @@
 # witch fetching unreaded messages from OWA e-mail client.
 #
 # Self-test usage info:
-#  Usage plugin like script from command line:
+# Usage plugin like script from command line:
 #  $ __main__ <owa_url> <login> <password>
 #  ---
 #  <owa_url>  - url to OWA main login page
@@ -16,60 +16,72 @@
 # @todo:       clear code, add more comments
 
 try:
-    from PluginProvider import Plugin
+    from plugins.PluginProvider import Plugin
+
     PluginProvider_is_available = True
 except ImportError:
     class Plugin:
         pass
+
     PluginProvider_is_available = False
 
 # output file base pattern
 BASENAME = "OwaLoginAndGetRecivedEmailsSubjectsPagePlugin"
 # the path and filename that you want to use to save your cookies in
-COOKIEFILE         = '/tmp/' + BASENAME + '_cookies.lwp'
+COOKIEFILE = '/tmp/' + BASENAME + '_cookies.lwp'
 # HTML plugin output
 OWA_CHECKER_OUTPUT = '/tmp/' + BASENAME + '_recived_messages.html'
-
 
 import os.path
 import urllib
 import re
+
 from BeautifulSoup import BeautifulSoup
 
+
 class OwaLoginAndGetRecivedEmailsSubjectsPagePlugin(Plugin):
-    capabilities   = ['reporter', 'init', 'deinit', 'next_item',
-                      'proccess', 'set_data', 'get_data',
-                      'get_data_count', 'set_verbose']
-    DATA           = []
+    capabilities = ['reporter', 'init', 'deinit', 'next_item',
+                    'proccess', 'set_data', 'get_data',
+                    'get_data_count', 'set_verbose']
+    DATA = []
     VERBOSE_PREFIX = "plugin verbose mode >> "
-    VERBOSE        = False
+    VERBOSE = False
 
     def script_usage(self):
-        print "Usage plugin like script from command line:"
-        print "$ %s <owa_url> <login> <password>" % (self.__module__)
-        print "---"
-        print "<owa_url>  - url to OWA main login page"
-        print "<login>    - username for login to OWA"
-        print "<password> - password for login to OWA"
+        print
+        "Usage plugin like script from command line:"
+        print
+        "$ %s <owa_url> <login> <password>" % (self.__module__)
+        print
+        "---"
+        print
+        "<owa_url>  - url to OWA main login page"
+        print
+        "<login>    - username for login to OWA"
+        print
+        "<password> - password for login to OWA"
 
     def reporter(self):
         return 'Hello %s!' % __name__
 
     def plugin_init(self):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'init from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'init from "%s"!' % __name__
 
         return True
 
     def plugin_deinit(self):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'deinit from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'deinit from "%s"!' % __name__
 
         return True
 
     def plugin_proccess(self):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'proccess from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'proccess from "%s"!' % __name__
 
         output_data = []
         output_data = self.get_email_contents_data(self.DATA['auth'])
@@ -77,9 +89,9 @@ class OwaLoginAndGetRecivedEmailsSubjectsPagePlugin(Plugin):
         messages = []
         for subject in output_data:
             data_msg = {'title': 'Taskler Owa Checker Notify',
-                'message': str(subject),
-                'app_name': 'Taskler',
-                'app_sub_name': 'v0.2'}
+                        'message': str(subject),
+                        'app_name': 'Taskler',
+                        'app_sub_name': 'v0.2'}
 
             messages.append(data_msg)
 
@@ -89,20 +101,23 @@ class OwaLoginAndGetRecivedEmailsSubjectsPagePlugin(Plugin):
 
     def plugin_next_item(self):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'next_item from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'next_item from "%s"!' % __name__
 
         return True
 
     def plugin_set_data(self, data):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'set_data from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'set_data from "%s"!' % __name__
 
         self.DATA = data
         return True
 
     def plugin_get_data(self):
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'get_data from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'get_data from "%s"!' % __name__
 
         return self.DATA
 
@@ -110,42 +125,47 @@ class OwaLoginAndGetRecivedEmailsSubjectsPagePlugin(Plugin):
         proccesed_data_length = len(self.DATA)
 
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'get_data_count from "%s"!' % __name__
-            print self.VERBOSE_PREFIX + 'proccesed_data_length = "%d"!' % \
-                proccesed_data_length
+            print
+            self.VERBOSE_PREFIX + 'get_data_count from "%s"!' % __name__
+            print
+            self.VERBOSE_PREFIX + 'proccesed_data_length = "%d"!' % \
+                                  proccesed_data_length
 
         return proccesed_data_length
 
 
-    def plugin_set_verbose(self, verbose):
+    def set_verbose(self, verbose):
         self.VERBOSE = verbose
         return True
 
     def get_email_contents_data(self, auth):
         if True == self.VERBOSE:
             print
-            print self.VERBOSE_PREFIX + 'from "%s": %s'\
-                    % (__name__, "[INFO] START")
+            print
+            self.VERBOSE_PREFIX + 'from "%s": %s' \
+                                  % (__name__, "[INFO] START")
 
         cj = None
         ClientCookie = None
         cookielib = None
 
-        try:                                    # Let's see if cookielib is available
+        try:  # Let's see if cookielib is available
             import cookielib
         except ImportError:
             pass
         else:
             import urllib2
+
             urlopen = urllib2.urlopen
-            cj = cookielib.LWPCookieJar()       # This is a subclass of FileCookieJar that has useful load and save methods
+            cj = cookielib.LWPCookieJar()  # This is a subclass of FileCookieJar that has useful load and save methods
             Request = urllib2.Request
 
-        if not cookielib:                   # If importing cookielib fails let's try ClientCookie
+        if not cookielib:  # If importing cookielib fails let's try ClientCookie
             try:
                 import ClientCookie
             except ImportError:
                 import urllib2
+
                 urlopen = urllib2.urlopen
                 Request = urllib2.Request
             else:
@@ -158,7 +178,7 @@ class OwaLoginAndGetRecivedEmailsSubjectsPagePlugin(Plugin):
         # Request is bound to the right function for creating Request objects
         # Let's load the cookies, if they exist.
 
-        if cj != None:                                  # now we have to install our CookieJar so that it is used as the default CookieProcessor in the default opener handler
+        if cj != None:  # now we have to install our CookieJar so that it is used as the default CookieProcessor in the default opener handler
             if os.path.isfile(COOKIEFILE):
                 cj.load(COOKIEFILE)
             if cookielib:
@@ -175,31 +195,32 @@ class OwaLoginAndGetRecivedEmailsSubjectsPagePlugin(Plugin):
         auth_url_params = "owa/auth/owaauth.dll"
 
         if auth['owa_url'][0] == "/":
-            theurl  = auth['owa_url'] + auth_url_params
+            theurl = auth['owa_url'] + auth_url_params
         else:
-            theurl  = auth['owa_url'] + "/" + auth_url_params
+            theurl = auth['owa_url'] + "/" + auth_url_params
 
         theurl = theurl + "?url=" + auth['owa_url'] + "&reason=0"
 
         if True == self.VERBOSE:
             print
-            print self.VERBOSE_PREFIX + '"%s" : %s' % (__name__,\
-            "[INFO] The owa_url: " + theurl)
+            print
+            self.VERBOSE_PREFIX + '"%s" : %s' % (__name__, \
+                                                 "[INFO] The owa_url: " + theurl)
 
-        txdata = None                                                                           # if we were making a POST type request, we could encode a dictionary of values here - using urllib.urlencode
+        txdata = None  # if we were making a POST type request, we could encode a dictionary of values here - using urllib.urlencode
 
-        txheaders = {'User-agent' : 'Mozilla/5.0 (Windows; U; Windows NT 5.1;\
+        txheaders = {'User-agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1;\
                      en-US; rv:1.8.1) Gecko/20061010 Firefox/2.0.011',
-                     'Referer' : auth['owa_url']}
+                     'Referer': auth['owa_url']}
 
         params = {
-            'destination' : auth['owa_url'],
-            'flags' : '0',
-            'forcedownlevel' : '0',
-            'trusted' : '0',
-            'username' : auth['login'],
-            'password' : auth['pass'],
-            'isUtf8' : '1'
+            'destination': auth['owa_url'],
+            'flags': '0',
+            'forcedownlevel': '0',
+            'trusted': '0',
+            'username': auth['login'],
+            'password': auth['pass'],
+            'isUtf8': '1'
         }
 
         # some Java script functions linked with submit clkLgn() login button
@@ -209,72 +230,85 @@ class OwaLoginAndGetRecivedEmailsSubjectsPagePlugin(Plugin):
         txdata = urllib.urlencode(params)
 
         try:
-            req = Request(theurl, txdata, txheaders)            # create a request object
-            handle = urlopen(req)                               # and open it to return a handle on the url
+            req = Request(theurl, txdata, txheaders)  # create a request object
+            handle = urlopen(req)  # and open it to return a handle on the url
         except IOError, e:
             if True == self.VERBOSE:
-                print self.VERBOSE_PREFIX + 'from "%s": %s'\
-                    % (__name__, '[ERROR] We failed to open "%s".' % theurl)
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' \
+                                      % (__name__, '[ERROR] We failed to open "%s".' % theurl)
                 if hasattr(e, 'code'):
-                    print self.VERBOSE_PREFIX + 'from "%s": %s'\
-                    % (__name__, '[ERROR] We failed with error code - %s.' % e.code)
+                    print
+                    self.VERBOSE_PREFIX + 'from "%s": %s' \
+                                          % (__name__, '[ERROR] We failed with error code - %s.' % e.code)
             pass
         else:
             if True == self.VERBOSE:
-                print self.VERBOSE_PREFIX + 'from "%s": %s'\
-                 % (__name__, '[INFO] Here are the headers of the page :')
-                print self.VERBOSE_PREFIX + 'from "%s": %s'\
-                 % (__name__, handle.info())
-                print self.VERBOSE_PREFIX + 'from "%s"' % __name__
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' \
+                                      % (__name__, '[INFO] Here are the headers of the page :')
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' \
+                                      % (__name__, handle.info())
+                print
+                self.VERBOSE_PREFIX + 'from "%s"' % __name__
         # handle.read() returns the page, handle.geturl() returns the true url of the page fetched (in case urlopen has followed any redirects, which it sometimes does)
 
 
         if cj == None:
             if True == self.VERBOSE:
-                print self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__,\
-                    "[ERROR] We don't have a cookie library available - sorry.")
-                print self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__,\
-                    "[ERROR] I can't show you any cookies.")
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__, \
+                                                         "[ERROR] We don't have a cookie library available - sorry.")
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__, \
+                                                         "[ERROR] I can't show you any cookies.")
             pass
         else:
             if True == self.VERBOSE:
-                print self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__,\
-                    'These are the cookies we have received so far :')
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__, \
+                                                         'These are the cookies we have received so far :')
                 for index, cookie in enumerate(cj):
-                    print self.VERBOSE_PREFIX + 'from "%s": %s - %s'\
-                    % (__name__, index, cookie)
-            cj.save(COOKIEFILE)                     # save the cookies again
-
+                    print
+                    self.VERBOSE_PREFIX + 'from "%s": %s - %s' \
+                                          % (__name__, index, cookie)
+            cj.save(COOKIEFILE)  # save the cookies again
 
         if True == self.VERBOSE:
             if handle is not None:
-                print self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__,\
-                    "[INFO] Handle is not None.")
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__, \
+                                                         "[INFO] Handle is not None.")
             else:
-                print self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__,\
-                "[ERROR] Handle is None. Maybe connection shutdowned ...")
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__, \
+                                                         "[ERROR] Handle is None. Maybe connection shutdowned ...")
 
         try:
             page_contents = handle.read()
         except:
             if True == self.VERBOSE:
-                print self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__,\
-                   "[ERROR] Problem with reading from handle")
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__, \
+                                                         "[ERROR] Problem with reading from handle")
             pass
         else:
             if True == self.VERBOSE:
-                print self.VERBOSE_PREFIX + 'from "%s": %s'\
-                % (__name__,\
-                "[INFO] Readed contents size: '" + str(len(page_contents))+ "'")
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' \
+                                      % (__name__, \
+                                         "[INFO] Readed contents size: '" + str(len(page_contents)) + "'")
 
                 # uncommnt for save content view
-                print self.VERBOSE_PREFIX + \
+                print
+                self.VERBOSE_PREFIX + \
                 " and write to temporary file '" + OWA_CHECKER_OUTPUT + "'"
                 fh = open(OWA_CHECKER_OUTPUT, "w")
                 fh.write(page_contents)
                 fh.close()
 
-# -------------------------------------------
+            # -------------------------------------------
         """
         theurl2 = auth['owa_url']
 
@@ -332,10 +366,10 @@ class OwaLoginAndGetRecivedEmailsSubjectsPagePlugin(Plugin):
         soup = BeautifulSoup(page_contents2)
         """
 
-#TODO: problem with GET contents with COOKIES
-#        url = opener.open(auth['owa_url'])
-#        page_contents2 = url.read(200000)
-#         print page_contents2
+        #TODO: problem with GET contents with COOKIES
+        #        url = opener.open(auth['owa_url'])
+        #        page_contents2 = url.read(200000)
+        #         print page_contents2
 
         soup = BeautifulSoup(page_contents)
         #p = soup.findAll('html', '')
@@ -350,35 +384,41 @@ class OwaLoginAndGetRecivedEmailsSubjectsPagePlugin(Plugin):
         unreaded_mail_messages_subjects = []
         if 0 < count:
             if True == self.VERBOSE:
-                print self.VERBOSE_PREFIX + 'from "%s": %s'\
-                % (__name__, "Found " + str(count) + " subject(s) :")
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' \
+                                      % (__name__, "Found " + str(count) + " subject(s) :")
 
             for id in xrange(len(tds)):
                 #print self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__, " %d -> %s" % (id, tds[id])
                 re_subject_h1 = re.compile('<h1 class="bld"><a href="#" onclick=".*">(.*)</a></h1>')
                 subject = re_subject_h1.search(str(tds[id])).groups()[0]
                 unreaded_mail_messages_subjects.append(str(subject).strip())
-#TODO
-#                 show_notification("[EMAIL]", subject)
+                #TODO
+                #                 show_notification("[EMAIL]", subject)
                 if True == self.VERBOSE:
-                    print self.VERBOSE_PREFIX + 'from "%s": %s'\
-                    % (__name__, "[EMAIL] %d -> %s" % (id, subject))
+                    print
+                    self.VERBOSE_PREFIX + 'from "%s": %s' \
+                                          % (__name__, "[EMAIL] %d -> %s" % (id, subject))
         else:
             unreaded_mail_messages_subjects = []
-#TODO
-#                show_notification("[EMAIL]", subject)
+            #TODO
+            #                show_notification("[EMAIL]", subject)
             if True == self.VERBOSE:
                 subject = "[INFO] There was no EMAILs ..."
-                print self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__,subject)
+                print
+                self.VERBOSE_PREFIX + 'from "%s": %s' % (__name__, subject)
 
         if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'from "%s"' % __name__
-            print self.VERBOSE_PREFIX + 'from "%s": %s'\
-                 % (__name__, "[INFO] STOP")
+            print
+            self.VERBOSE_PREFIX + 'from "%s"' % __name__
+            print
+            self.VERBOSE_PREFIX + 'from "%s": %s' \
+                                  % (__name__, "[INFO] STOP")
 
-            print self.VERBOSE_PREFIX +\
-                'from "%s": [INFO] unreaded subjects: %s'\
-                % (__name__, str(unreaded_mail_messages_subjects))
+            print
+            self.VERBOSE_PREFIX + \
+            'from "%s": [INFO] unreaded subjects: %s' \
+            % (__name__, str(unreaded_mail_messages_subjects))
 
         return unreaded_mail_messages_subjects
 
@@ -392,14 +432,16 @@ if __name__ == "__main__" and PluginProvider_is_available == False:
         sys.exit()
     else:
         obj = OwaLoginAndGetRecivedEmailsSubjectsPagePlugin()
-        obj.plugin_set_verbose(True)
-        unreaded_messages =  obj.get_email_contents_data(
-                                    {'owa_url' : sys.argv[1],
-                                     'login': sys.argv[2],
-                                     'pass' : sys.argv[3]})
+        obj.set_verbose(True)
+        unreaded_messages = obj.get_email_contents_data(
+            {'owa_url': sys.argv[1],
+             'login': sys.argv[2],
+             'pass': sys.argv[3]})
 
         if len(unreaded_messages) > 0:
             for k, v in xrange(unreaded_messages):
-                print k, v
+                print
+                k, v
         else:
-            print "No messages or problem witch fetching e-mails !"
+            print
+            "No messages or problem witch fetching e-mails !"

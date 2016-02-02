@@ -5,11 +5,11 @@
 
 __author__ = 'Mark Roach (mrroach@google.com)'
 
+from pprint import pformat
 
 import urllib2
 import urlparse
 from StringIO import StringIO
-from pprint import pformat
 
 
 class Error(Exception):
@@ -90,21 +90,21 @@ class TestHandler(urllib2.HTTPHandler, urllib2.HTTPSHandler):
                    capitalize_keys(request.headers))
             if str(key) in self._response_map:
                 (code, body, response_headers) = self._response_map[str(key)]
-                return FakeResponse(code, body, response_headers) 
+                return FakeResponse(code, body, response_headers)
             else:
                 raise Error('Unknown request %s %s'
                             '\nrequest:%s\nresponse_map:%s' % (
-                            request.get_method(), request.get_full_url(),
-                            str(key), pformat(self._response_map.keys())))
+                                request.get_method(), request.get_full_url(),
+                                str(key), pformat(self._response_map.keys())))
         elif isinstance(self._response, Exception):
-            raise(self._response)
+            raise (self._response)
         else:
             return self._response
 
 
 class FakeResponse(object):
     '''A fake HTTPResponse object for testing.'''
-    
+
     def __init__(self, code, body, headers=None):
         self.code = code
         self.msg = str(code)
@@ -113,11 +113,11 @@ class FakeResponse(object):
         self.headers = headers
         self.info = lambda: self.headers
         self.body_file = StringIO(body)
-    
+
     def read(self):
         """Read the entire response body."""
         return self.body_file.read()
-    
+
     def readline(self):
         """Read a single line from the response body."""
         return self.body_file.readline()

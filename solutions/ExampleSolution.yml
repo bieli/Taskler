@@ -1,4 +1,4 @@
-takler_solution:
+taskler_solution:
   task_set_verbose:   True
   plugin_set_verbose: True
   tasks:              
@@ -6,4 +6,4 @@ takler_solution:
     - ExamplePrintsMessagesTask
 
   input_data:         [10, 20, 3, 11]
-
+  #TODO: change "input_data" to "init_input_data"

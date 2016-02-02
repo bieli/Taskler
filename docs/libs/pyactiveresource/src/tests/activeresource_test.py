@@ -7,6 +7,7 @@ __author__ = 'Mark Roach (mrroach@google.com)'
 
 import unittest
 import pickle
+
 from pyactiveresource import activeresource
 from pyactiveresource import connection
 from pyactiveresource import util
@@ -28,24 +29,24 @@ class ActiveResourceTest(unittest.TestCase):
         self.soup = {'id': 1, 'name': 'Hot Water Soup'}
         self.store_new = {'name': 'General Store'}
         self.general_store = {'id': 1, 'name': 'General Store'}
-        self.store_update = {'manager_id': 3, 'id': 1, 'name':'General Store'}
+        self.store_update = {'manager_id': 3, 'id': 1, 'name': 'General Store'}
         self.xml_headers = {'Content-type': 'application/xml'}
 
-        self.matz  = util.to_xml(
-                {'id': 1, 'name': 'Matz'}, root='person')
-        self.matz_deep  = util.to_xml(
-                {'id': 1, 'name': 'Matz', 'other': 'other'},
-                root='person')
+        self.matz = util.to_xml(
+            {'id': 1, 'name': 'Matz'}, root='person')
+        self.matz_deep = util.to_xml(
+            {'id': 1, 'name': 'Matz', 'other': 'other'},
+            root='person')
         self.matz_array = util.to_xml(
-                [{'id': 1, 'name': 'Matz'}], root='people')
+            [{'id': 1, 'name': 'Matz'}], root='people')
         self.ryan = util.to_xml(
-                {'name': 'Ryan'}, root='person')
+            {'name': 'Ryan'}, root='person')
         self.addy = util.to_xml(
-                {'id': 1, 'street': '12345 Street'},
-                root='address')
-        self.addy_deep  = util.to_xml(
-                {'id': 1, 'street': '12345 Street', 'zip': "27519" },
-                root='address')
+            {'id': 1, 'street': '12345 Street'},
+            root='address')
+        self.addy_deep = util.to_xml(
+            {'id': 1, 'street': '12345 Street', 'zip': "27519"},
+            root='address')
 
         http_fake.initialize()  # Fake all http requests
         self.http = http_fake.TestHandler
@@ -56,14 +57,17 @@ class ActiveResourceTest(unittest.TestCase):
 
         class Person(activeresource.ActiveResource):
             _site = 'http://localhost'
+
         self.person = Person
 
         class Store(activeresource.ActiveResource):
             _site = 'http://localhost'
+
         self.store = Store
 
         class Address(activeresource.ActiveResource):
             _site = 'http://localhost/people/$person_id/'
+
         self.address = Address
 
     def test_find_one(self):
@@ -74,6 +78,7 @@ class ActiveResourceTest(unittest.TestCase):
 
         class Soup(activeresource.ActiveResource):
             _site = 'http://localhost'
+
         soup = Soup.find_one(from_='/what_kind_of_soup.xml')
         self.assertEqual(self.soup, soup.attributes)
 
@@ -168,12 +173,12 @@ class ActiveResourceTest(unittest.TestCase):
         self.assertEqual([], nobody)
 
     def test_set_prefix_source(self):
-      self.http.respond_to(
-          'GET', '/stores/1/people.xml?name=Ralph', {},
-          util.to_xml([], root='people'))
-      self.person.prefix_source = '/stores/${store_id}/'
-      nobody = self.person.find(store_id=1, name='Ralph')
-      self.assertEqual([], nobody)
+        self.http.respond_to(
+            'GET', '/stores/1/people.xml?name=Ralph', {},
+            util.to_xml([], root='people'))
+        self.person.prefix_source = '/stores/${store_id}/'
+        nobody = self.person.find(store_id=1, name='Ralph')
+        self.assertEqual([], nobody)
 
     def test_save(self):
         # Return an object with id for a post(save) request.
@@ -193,9 +198,9 @@ class ActiveResourceTest(unittest.TestCase):
 
     def test_class_get(self):
         self.http.respond_to('GET', '/people/retrieve.xml?name=Matz',
-                             {}, self.matz_array)
+            {}, self.matz_array)
         self.assertEqual([{'id': 1, 'name': 'Matz'}],
-                         self.person.get('retrieve', name='Matz' ))
+                         self.person.get('retrieve', name='Matz'))
 
     def test_class_post(self):
         self.http.respond_to('POST', '/people/hire.xml?name=Matz',
@@ -217,7 +222,7 @@ class ActiveResourceTest(unittest.TestCase):
 
     def test_class_delete(self):
         self.http.respond_to('DELETE', '/people/deactivate.xml?name=Matz',
-                             {}, '')
+            {}, '')
         self.assertEqual(connection.Response(200, ''),
                          self.person.delete('deactivate', name='Matz'))
 
@@ -270,7 +275,7 @@ class ActiveResourceTest(unittest.TestCase):
             'GET', '/people/1/addresses/1.xml', {}, self.addy)
         self.http.respond_to(
             'GET', '/people/1/addresses/1/deep.xml', {}, self.addy_deep)
-        self.assertEqual({'id': 1, 'street': '12345 Street', 'zip': "27519" },
+        self.assertEqual({'id': 1, 'street': '12345 Street', 'zip': "27519"},
                          self.address.find(1, person_id=1).get('deep'))
 
 
@@ -313,6 +318,7 @@ class ActiveResourceTest(unittest.TestCase):
 
     def test_user_variable_can_be_reset(self):
         class Actor(activeresource.ActiveResource): pass
+
         Actor.site = 'http://cinema'
         self.assert_(Actor.user is None)
         Actor.user = 'username'
@@ -322,6 +328,7 @@ class ActiveResourceTest(unittest.TestCase):
 
     def test_password_variable_can_be_reset(self):
         class Actor(activeresource.ActiveResource): pass
+
         Actor.site = 'http://cinema'
         self.assert_(Actor.password is None)
         Actor.password = 'password'
@@ -331,6 +338,7 @@ class ActiveResourceTest(unittest.TestCase):
 
     def test_timeout_variable_can_be_reset(self):
         class Actor(activeresource.ActiveResource): pass
+
         Actor.site = 'http://cinema'
         self.assert_(Actor.timeout is None)
         Actor.timeout = 5
@@ -340,6 +348,7 @@ class ActiveResourceTest(unittest.TestCase):
 
     def test_credentials_from_site_are_decoded(self):
         class Actor(activeresource.ActiveResource): pass
+
         Actor.site = 'http://my%40email.com:%31%32%33@cinema'
         self.assertEqual('my@email.com', Actor.user)
         self.assertEqual('123', Actor.password)
@@ -347,6 +356,7 @@ class ActiveResourceTest(unittest.TestCase):
     def test_site_attribute_declaration_is_parsed(self):
         class Actor(activeresource.ActiveResource):
             _site = 'http://david:test123@localhost.localsite:4000/api'
+
         self.assertEqual(['david', 'test123'], [Actor.user, Actor.password])
 
     def test_changing_subclass_site_does_not_affect_superclass(self):

@@ -5,14 +5,14 @@ from gasp import *
 
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
-GRID_WIDTH = SCREEN_WIDTH/10 - 1
-GRID_HEIGHT = SCREEN_HEIGHT/10 - 1
+GRID_WIDTH = SCREEN_WIDTH / 10 - 1
+GRID_HEIGHT = SCREEN_HEIGHT / 10 - 1
 
 
 def place_player():
     x = random.randint(0, GRID_WIDTH)
     y = random.randint(0, GRID_HEIGHT)
-    return {'shape': Circle((10*x+5, 10*y+5), 5, filled=True), 'x': x, 'y': y}
+    return {'shape': Circle((10 * x + 5, 10 * y + 5), 5, filled=True), 'x': x, 'y': y}
 
 
 def move_player(player):
@@ -42,7 +42,7 @@ def move_player(player):
     else:
         return False
 
-    move_to(player['shape'], (10*player['x']+5, 10*player['y']+5))
+    move_to(player['shape'], (10 * player['x'] + 5, 10 * player['y'] + 5))
 
     return False
 
@@ -50,7 +50,7 @@ def move_player(player):
 def play_game():
     begin_graphics(SCREEN_WIDTH, SCREEN_HEIGHT, title="Robots")
 
-#    Place(10, 10, 25, 25, filled=True)
+    # Place(10, 10, 25, 25, filled=True)
 
     player = place_player()
     finished = False

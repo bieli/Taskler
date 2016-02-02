@@ -9,16 +9,16 @@ setup(name='pyactiveresource',
       author_email='me@superjared.com',
       url='http://code.google.com/p/pyactiveresource/',
       packages=['pyactiveresource'],
-      package_dir={'pyactiveresource':'src'},
+      package_dir={'pyactiveresource': 'src'},
       license='MIT License',
       platforms=['any'],
       classifiers=['Development Status :: 5 - Production/Stable',
-                   'Intended Audience :: Developers', 
-                   'License :: OSI Approved :: MIT License', 
-                   'Operating System :: OS Independent', 
-                   'Programming Language :: Python', 
-                   'Topic :: Software Development', 
-                   'Topic :: Software Development :: Libraries', 
+                   'Intended Audience :: Developers',
+                   'License :: OSI Approved :: MIT License',
+                   'Operating System :: OS Independent',
+                   'Programming Language :: Python',
+                   'Topic :: Software Development',
+                   'Topic :: Software Development :: Libraries',
                    'Topic :: Software Development :: Libraries :: Python Modules']
-      
-    )
+
+)

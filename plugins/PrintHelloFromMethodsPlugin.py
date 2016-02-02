@@ -1,101 +1,80 @@
 # -*- coding: utf-8 -*-
-#
-# SImple example plugin code for "taskler" system
-# witch displays "Hello world"  messages on STDOUT console.
-#
-# Self-test usage info:
-#  Usage plugin like script from command line:
-#  $ __main__
-#  ---
-#  no need arguments
-#  OUTPUT RESULTS:
-#  Hello __main__!#
-# @contact:    bieli@bieli.net
-# @author:     Marcin Bielak
-# @todo:       clear code, add more comments
 
 try:
-    from PluginProvider import Plugin
+    from plugins.PluginProvider import Plugin
+
     PluginProvider_is_available = True
 except ImportError:
     class Plugin:
         pass
+
     PluginProvider_is_available = False
 
 
 class PrintHelloFromMethodsPlugin(Plugin):
-    capabilities   = ['reporter', 'init', 'deinit', 'next_item',
-                      'proccess', 'set_data', 'get_data',
-                      'get_data_count', 'set_verbose']
-    DATA           = []
+    capabilities = ['reporter', 'init', 'deinit', 'next_item',
+                    'proccess', 'set_data', 'get_data',
+                    'get_data_count', 'set_verbose']
+    DATA = []
     VERBOSE_PREFIX = "plugin verbose mode >> "
-    VERBOSE        = False
+    VERBOSE = False
 
     def script_usage(self):
-        print "Usage plugin like script from command line:"
-        print "$ %s" % (self.__module__)
-        print "---"
-        print "no need arguments"
+        print("Usage plugin like script from command line:")
+        print("$ %s" % self.__module__)
+        print("---")
+        print("no need arguments")
 
     def reporter(self):
         return 'Hello %s!' % __name__
 
     def plugin_init(self):
-        if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'init from "%s"!' % __name__
-
+        if self.VERBOSE:
+            print(self.VERBOSE_PREFIX + 'init from "%s"!' % __name__)
         return True
 
     def plugin_deinit(self):
-        if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'deinit from "%s"!' % __name__
-
+        if self.VERBOSE:
+            print(self.VERBOSE_PREFIX + 'deinit from "%s"!' % __name__)
         return True
 
     def plugin_proccess(self):
-        if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'proccess from "%s"!' % __name__
+        if self.VERBOSE:
+            print(self.VERBOSE_PREFIX + 'proccess from "%s"!' % __name__)
 
         output_data = self.DATA
-
         for data in self.DATA:
-            data = data + 10
-
+            data += 10
         self.DATA = output_data
 
         return True
 
     def plugin_next_item(self):
-        if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'next_item from "%s"!' % __name__
-
+        if self.VERBOSE:
+            print(self.VERBOSE_PREFIX + 'next_item from "%s"!' % __name__)
         return True
 
     def plugin_set_data(self, data):
-        if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'set_data from "%s"!' % __name__
-
+        if self.VERBOSE:
+            print(self.VERBOSE_PREFIX + 'set_data from "%s"!' % __name__)
         self.DATA = data
         return True
 
     def plugin_get_data(self):
-        if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'get_data from "%s"!' % __name__
-
+        if self.VERBOSE:
+            print(self.VERBOSE_PREFIX + 'get_data from "%s"!' % __name__)
         return self.DATA
 
     def plugin_get_data_count(self):
         proccesed_data_length = len(self.DATA)
 
-        if True == self.VERBOSE:
-            print self.VERBOSE_PREFIX + 'get_data_count from "%s"!' % __name__
-            print self.VERBOSE_PREFIX + 'proccesed_data_length = "%d"!' % \
-                proccesed_data_length
-
+        if self.VERBOSE:
+            print(self.VERBOSE_PREFIX + 'get_data_count from "%s"!' % __name__)
+            print(self.VERBOSE_PREFIX + 'proccesed_data_length = "%d"!' % proccesed_data_length)
         return proccesed_data_length
 
 
-    def plugin_set_verbose(self, verbose):
+    def set_verbose(self, verbose):
         self.VERBOSE = verbose
         return True
 
@@ -106,6 +85,8 @@ if __name__ == "__main__" and PluginProvider_is_available == False:
     obj = PrintHelloFromMethodsPlugin()
     obj.script_usage()
 
-    print "OUTPUT RESULTS:"
-    print obj.reporter()
+    print
+    "OUTPUT RESULTS:"
+    print
+    obj.reporter()
     sys.exit()
