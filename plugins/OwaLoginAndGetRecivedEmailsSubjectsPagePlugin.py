@@ -232,8 +232,8 @@ class OwaLoginAndGetRecivedEmailsSubjectsPagePlugin(Plugin):
         try:
             req = Request(theurl, txdata, txheaders)  # create a request object
             handle = urlopen(req)  # and open it to return a handle on the url
-        except IOError, e:
-            if True == self.VERBOSE:
+        except IOError as e:
+            if self.VERBOSE:
                 print
                 self.VERBOSE_PREFIX + 'from "%s": %s' \
                                       % (__name__, '[ERROR] We failed to open "%s".' % theurl)
