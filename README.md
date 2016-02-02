@@ -106,6 +106,7 @@ TODO
 ----
 - [x] runnable code with plugins and first ExampleSoution
 - [x] clear README file (add flow diagram Taskler image)
+- [x] clean code and refactoring in repository (after 5 years !)
 - [ ] add unit tests with Travis CI (Py27, Py34)
 - [ ] catalog and logical structure for Taskler's "projects" (for included each tasks for one thing)
 - [ ] add plugin to logs/events storage in LOG standard files (with rotation)
